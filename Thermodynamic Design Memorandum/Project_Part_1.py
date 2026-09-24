@@ -48,11 +48,11 @@ print(gas_2.species_names)
 # ________________________________________________________________________________________________________
 
 # Populate the equivalence ratios
-eq_ratio = np.linspace(0.3,3,5)
+eq_ratio = np.linspace(0.5,2, 5)
 
 
 # Populate the different chamber pressures to use in [Pa] and the chamber temperature [K]
-pressures = [101325,500000,1000000]
+pressures = [1E7,2E7,3E7]
 temperature = 298
 
 
@@ -83,8 +83,10 @@ def constant_pressure_flame_temperature(fuel,oxidizer,T,P,eq_ratio,gas_object):
     
     # Run a for loop for every equivalence ratio value and compute the adiabatic flame temperature
     for i in range(0,len(eq_ratio)):
-        
-        
+
+        # Reset the object state after each iteration
+        gas_object.TP = T, P
+
         # Set up the equivalence ratio
         gas_object.set_equivalence_ratio(phi=eq_ratio[i], fuel=fuel, oxidizer=oxidizer)
         
@@ -109,16 +111,16 @@ def plot_flame_temp_curves(eq_ratio,flame_temp_curves,P,title):
     
     
     # Plot the three different flame temp curves for each pressure
-    plt.plot(eq_ratio,flame_temp_curves[0],label=str(P[0])+' Pa',color='blue',linestyle='-')
-    plt.plot(eq_ratio,flame_temp_curves[1],label=str(P[1])+' Pa',color='purple',linestyle='-')
-    plt.plot(eq_ratio,flame_temp_curves[2],label=str(P[2])+' Pa',color='red',linestyle='-')
+    plt.plot(eq_ratio,flame_temp_curves[0],label=str(P[0]/1E5)+' Bar',color='blue',linestyle='-')
+    plt.plot(eq_ratio,flame_temp_curves[1],label=str(P[1]/1E5)+' Bar',color='purple',linestyle='-')
+    plt.plot(eq_ratio,flame_temp_curves[2],label=str(P[2]/1E5)+' Bar',color='red',linestyle='-')
     
     
     # Format the layout of the plot
     plt.title(title)
     plt.xlabel('Equivalence Ratio (phi)')
-    plt.ylabel('Flame Temperature (K)')
-    plt.xlim(min(eq_ratio), max(eq_ratio))
+    plt.ylabel('Adiabatic Flame Temperature (K)')
+    plt.xlim(min(eq_ratio)-0.2, max(eq_ratio)+0.2)
     plt.grid(True)
     plt.legend()
     
@@ -150,7 +152,7 @@ for i in range(0,len(pressures)):
 
 
 # Define the title strings
-kerosine_title = "Adiabatic Flame Temperature vs. Equivalence Ratio (Kerosine + Oxygen)"
+kerosine_title = "Adiabatic Flame Temperature vs. Equivalence Ratio (Kerosene + Oxygen)"
 methane_title = "Adiabatic Flame Temperature vs. Equivalence Ratio (Methane + Oxygen)"
 hydrogen_title = "Adiabatic Flame Temperature vs. Equivalence Ratio (Hydrogen + Oxygen)"
 
@@ -159,3 +161,6 @@ hydrogen_title = "Adiabatic Flame Temperature vs. Equivalence Ratio (Hydrogen + 
 plot_flame_temp_curves(eq_ratio,kerosine_flame_temp_array,pressures,kerosine_title)
 plot_flame_temp_curves(eq_ratio,methane_flame_temp_array,pressures,methane_title)
 plot_flame_temp_curves(eq_ratio,hydrogen_flame_temp_array,pressures,hydrogen_title)
+
+
+

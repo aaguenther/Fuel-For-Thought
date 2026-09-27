@@ -101,7 +101,7 @@ gas_2 = ct.Solution("nDodecane_Reitz.yaml") # Mechanism for kerosene
 eq_ratio = np.linspace(0.5,4, 60)
 
 # Chamber temperature and pressure
-pressures = [1E7,2E7,3E7] # (Pa)
+pressures = [0.5E7,1.5E7,3E7] # (Pa)
 temperature = 298 # (K)
 Ru = 8314 # J/(kmol*K)
 

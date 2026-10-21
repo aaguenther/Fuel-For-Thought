@@ -316,7 +316,7 @@ plt.show()
 # Print Results
 
 print("################################ Design Parameters ####################################\n")
-print("Thurst =", T, "mN")
+print("Thurst =", T, "mN\n")
 print("################################ Chamber Properties ###################################\n")
 print("**1 bar**\n")
 print("gamma =", f"{gamma[0]:.3f}")

@@ -22,8 +22,21 @@ def equilibrium_properties(fuel, oxidizer, T, P, eq_ratio, gas_object):
         flame_temp.append(gas_object.T)
         gamma.append(gas_object.cp_mass / gas_object.cv_mass)
         mw.append(gas_object.mean_molecular_weight)  # kg/kmol
+        
+        # Print out the species present after the combustion reaction
+        print("The species present with P = " + str(P) + " Pa are ...")
+        for species, fraction in zip(gas_object.species_names, gas_object.X):
+            if fraction > 1e-7: 
+                print(f"{species:<8} -> molar fraction: {fraction:.6f}")
+        
+        print("\n")
+        
+        
 
     return flame_temp, gamma, mw, gas_object
+
+
+
 
 def characteristic_velocity(T_ad, gamma, R):
 

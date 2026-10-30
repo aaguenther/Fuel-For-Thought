@@ -806,7 +806,10 @@ left_y = [
     [collision_rate_local_1_bar,collision_rate_local_10_bar,collision_rate_local_100_bar],               # plot 2 (placeholders)
     [cummulative_collisions_1_bar,cummulative_collisions_10_bar,cummulative_collisions_100_bar],  # plot 3 (placeholders)
 ]
-left_curve_labels = ["1 bar", "10 bar", "100 bar"]          # shared legend entries
+
+
+# shared legend entries
+left_curve_labels = ["1 bar", "10 bar", "100 bar"]
 left_curve_colors = ["tab:blue", "tab:orange", "tab:green"]
  
 left_title  = "Diverging Nozzle 50 mN Design"
@@ -814,26 +817,21 @@ left_xlabel = r"Axial distance from throat $x/D_t$"
 left_ylabels = ["Local Kn", r"Collision rate per molecule $\nu$ (s$^{-1}$)",
                 "Cumulative collisions\nper molecule from throat"]
  
-# Optional fixed y-limits per plot: (ymin, ymax) or None for autoscale
+
+# Fixed y-limits, if needed
 left_ylims = [None,None,None]
 # X-limits shared by the 3 left plots: (xmin, xmax), or None = min/max over ALL left x data
 left_xlim = None
  
-# Optional shaded horizontal bands per plot: list of (ymin, ymax, color, alpha)
+# Shaded horizontal bands per plot, if needed
 left_bands = [
     [(1e-1, 1e0, "gray", 0.69), (1e-2, 1e-1, "gray", 0.15)],   # plot 1 (example)
     [],                                                        # plot 2
     [],                                                        # plot 3
 ]
  
-# ---------------------------------------------------------------------
-# RIGHT COLUMN DATA
-# ---------------------------------------------------------------------
-# Each curve has its OWN x-array and y-array. The plots only share the x-axis
-# LIMITS/ticks (see right_xlim below), not the x data itself.
-# right_x[plot_index][curve_index] pairs with right_y[plot_index][curve_index]
-# Curve order must match right_curve_styles below. Y values must be positive.
-# >>> PLACE YOUR RIGHT-COLUMN X ARRAYS HERE (3 plots x 5 curves) <<<
+
+# Right column data
 def _x(start, stop, n):
     return np.linspace(start, stop, n)
 right_x = [
@@ -842,10 +840,9 @@ right_x = [
     [x_vals_nondimen_100_bar,x_vals_nondimen_100_bar,x_vals_nondimen_100_bar,x_vals_nondimen_100_bar,x_vals_nondimen_100_bar],  # plot 3 (placeholders)
 ]
  
-# >>> PLACE YOUR RIGHT-COLUMN Y ARRAYS HERE (3 plots x 5 curves) <<<
-# Each y-array must have the same length as its matching x-array above.
+# Right column y-arrays
 _scales = [1.0, 0.5, 0.1]
-_factors = [1, 1/25, 1/80, 1/10, 1e2]      # placeholder curve shapes
+_factors = [1, 1/25, 1/80, 1/10, 1e2]
 right_y = [
     [exp_time_1_bar,exp_time_break_down_1_bar,vib_relax_time_1_bar,trans_relax_time_1_bar,rot_relax_time_1_bar],  # plot 1 (placeholders)
     [exp_time_10_bar,exp_time_break_down_10_bar,vib_relax_time_10_bar,trans_relax_time_10_bar,rot_relax_time_10_bar],  # plot 2 (placeholders)
@@ -876,20 +873,17 @@ right_title  = "Time Needed to Relax vs Time Available 50 mN Design"
 right_xlabel = r"Axial distance from throat $x/D_t$"
 right_ylabels = ["Time (s)", "Time (s)", "Time (s)"]
  
-# >>> TYPE YOUR TEXT BOX CONTENTS HERE (one string per right plot) <<<
+# Define the text box contents
 right_textbox_text = ["1 bar", "10 bar", "100 bar"]
  
-# >>> SET THE Y-LIMITS SHARED BY ALL THREE RIGHT PLOTS HERE <<<
-# (ymin, ymax), both positive (log axis). Same range on every right plot so
-# they are directly comparable. Set to None to autoscale each plot instead.
+# Set the y-limits for all three of the plots
 right_ylim = (1e-10, 1e-3)
-# X-limits shared by the 3 right plots: (xmin, xmax), or None = min/max over ALL right x data
+
+# Set the x limits of the three plots
 right_xlim = None
  
  
-# =====================================================================
-# HELPERS
-# =====================================================================
+# Helper functions
 def style_axes(ax, ylabel, ylim):
     ax.set_yscale("log")
     ax.grid(True, which="major", alpha=0.35)
@@ -932,13 +926,11 @@ def finish_column(axes, x_arrays, xlim, xlabel, title):
     axes[0].set_title(title, fontsize=13)
  
  
-# =====================================================================
-# BUILD THE FIGURE
-# =====================================================================
+# Build the figure
 fig, axs = plt.subplots(3, 2, sharex="col", figsize=(16, 11))
 axL, axR = axs[:, 0], axs[:, 1]
  
-# ----- LEFT column -----------------------------------------------------
+# Create the left column plots
 for i, ax in enumerate(axL):
     for x, y, lab, col in zip(left_x[i], left_y[i], left_curve_labels, left_curve_colors):
         ax.plot(x, y, label=lab, color=col, zorder=3)
@@ -950,7 +942,7 @@ for i, ax in enumerate(axL):
 finish_column(axL, [x for row in left_x for x in row], left_xlim, left_xlabel, left_title)
 axL[0].legend(loc="upper left", fontsize=8)      # shared legend, inside top plot
  
-# ----- RIGHT column ----------------------------------------------------
+# Create the right column plots
 for i, ax in enumerate(axR):
     for x, y, st in zip(right_x[i], right_y[i], right_curve_styles):
         ax.plot(x, y, color=st["color"], ls=st["ls"], lw=st["lw"],

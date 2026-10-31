@@ -788,7 +788,73 @@ for i in range(index,len(x_values_1bar)):
     rot_relax_time_100_bar.append(5 / collision_rate_local_100_bar[i])
 
 
-################################################ Plotting ###############################################
+
+
+######################################## Task 3 Information #############################################
+
+print("\n\n")
+
+# This section will be dedicated to printing out data for the tables in the report
+
+# Store the chamber pressures in strings that will be stored in an array
+pressures_string = ["1 bar","10 bar","100 bar"]
+
+# Store the cumulative collisions for each pressure inside of an array
+cummulative_collisions_arr = [cummulative_collisions_1_bar,cummulative_collisions_10_bar,cummulative_collisions_100_bar]
+
+# Store the collision rates for each pressure inside of an array
+collision_rates_arr = [collision_rate_local_1_bar,collision_rate_local_10_bar,collision_rate_local_100_bar]
+
+# Store the expansion times for each pressure inside of an array
+expansion_times_arr = [exp_time_1_bar,exp_time_10_bar,exp_time_100_bar]
+
+# Store the rotational relaxation times for each pressure inside of an array
+rotational_relaxation_times_arr = [rot_relax_time_1_bar,rot_relax_time_10_bar,rot_relax_time_100_bar]
+
+# Store the vibrational relaxation times for each pressure inside of an array
+vibrational_relaxation_times_arr = [vib_relax_time_1_bar,vib_relax_time_10_bar,vib_relax_time_100_bar]
+
+# Run a for loop to print out important info. for each chamber pressure
+for i in range(0,len(pressures_string)):
+    
+    # Print out what chamber pressure we are on
+    print("Chamber pressure ... " + pressures_string[i])
+    print("*******************************************")
+    
+    # Print out the total cummulative collisions a molecule undergoes: N(nozzle_length)
+    print("Cumulative Collisions N ... " + str(cummulative_collisions_arr[i][-1]))
+    
+    # Print out the product v*t_exp at both A/A_t = 1.1 and at the nozzle exit
+    print("v*t_exp at A/A_t = 1.1  ... " + str(collision_rates_arr[i][index]*expansion_times_arr[i][index]))
+    print("v*t_exp at nozzle exit  ... " + str(collision_rates_arr[i][-1]*expansion_times_arr[i][-1]))
+    
+    # Print out the expansion time at both A/A_t = 1.1 and at the nozzle exit
+    print("t_exp at A/A_t = 1.1    ... " + str(expansion_times_arr[i][index]))
+    print("t_exp at nozzle exit    ... " + str(expansion_times_arr[i][-1]))
+    
+    # Print out the rotational relaxation time at both A/A_t = 1.1 and at the nozzle exit
+    print("t_rot at A/A_t = 1.1    ... " + str(rotational_relaxation_times_arr[i][index]))
+    print("t_rot at nozzle exit    ... " + str(rotational_relaxation_times_arr[i][-1]))
+    
+    # Print out the vibrational relaxation time at both A/A_t = 1.1 and at the nozzle exit
+    print("t_vib at A/A_t = 1.1    ... " + str(vibrational_relaxation_times_arr[i][index]))
+    print("t_vib at nozzle exit    ... " + str(vibrational_relaxation_times_arr[i][-1]))
+    
+    print("")
+
+
+print("\n\n")
+
+
+print("Rotational relaxation times")
+for i in range(0,len(rotational_relaxation_times_arr[1])):
+    
+    print(rotational_relaxation_times_arr[1][i])
+    
+print("\n\n")
+
+
+############################################# Plotting ##################################################
 
 
 
@@ -853,11 +919,11 @@ right_y = [
  
 # One entry per curve (label, color, linestyle, linewidth)
 right_curve_styles = [
-    dict(label=r"$\tau_{exp}$ (time available)", color="k",          ls="-",  lw=2.5),
-    dict(label=r"$\tau_{exp}/25$",               color="k",          ls="--", lw=1.2),
-    dict(label=r"$\tau_{v}\approx 1/\nu$",   color="dimgray",    ls="-",  lw=1.5),
-    dict(label=r"$\tau_{trans}\approx 5/\nu$",     color="tab:orange", ls="-",  lw=1.5),
-    dict(label=r"$\tau_{rot}$ (CO)",               color="tab:red",    ls="--", lw=1.5),
+    dict(label=r"$\tau_{exp}$ (time available)",    color="k",          ls="-",  lw=2.5),
+    dict(label=r"$\tau_{exp}/25$",                  color="k",          ls="--", lw=1.2),
+    dict(label=r"$\tau_{vib}$ (H2)",                color="dimgray",    ls="-",  lw=1.5),
+    dict(label=r"$\tau_{trans}\approx 1/\nu$",      color="tab:orange", ls="-",  lw=1.5),
+    dict(label=r"$\tau_{rot}\approx 5/\nu$",        color="tab:red",    ls="--", lw=1.5),
 ]
  
 # Optional shaded regions between curves (same for every right plot).
